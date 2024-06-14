@@ -11,7 +11,7 @@ app.use(cookieParser());
 
 app.get('/', (req, res) => {
   res.json({
-    message: "Welcome to Car Wash Backend"
+    message: "Bike rental service for tourists or locals"
   });
 });
 
