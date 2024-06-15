@@ -56,26 +56,26 @@ Service Routes:
 - GET /api/rentals/ Get All service (Only Accessible by Admin).
 - PUT /api/rentals/id/return Get User's service (Only Accessible by User).
 
-## Installation
 
-1. Clone the repository:
-   git clone https://github.com/SShipon/Bike-Rental-Reservation-System-Backend.git
-   cd Bike-Rental-Reservation-System-Backend
-   npm install 
-   npm run build / tsc
-   npm run start:dev
+## Installation process guide 
+## Clone the repository:
+- git clone https://github.com/SShipon/Bike-Rental-Reservation-System-Backend.git
+- cd Bike-Rental-Reservation-System-Backend
+- npm install 
+- npm run build / tsc
+- npm run start:dev
 
-PORT=5000
-DATABASE_URL=mongodb+srv://BikeRentals-Server-2:7M882MNdONC6Aixl@cluster0.u675lb8.mongodb.net/BikeRentals?retryWrites=true&w=majority&appName=Cluster0
-NODE_ENV=development 
-SALT_ROUND=10
-JWT_ACCESS_SECRET=60e293b8467e97160670d73356bdaf971080e1d875804e421033b7071934cbf5
+- PORT=5000
+- DATABASE_URL=mongodb+srv://BikeRentals-Server-2:7M882MNdONC6Aixl@cluster0.u675lb8.mongodb.net/BikeRentals?retryWrites=true&w=majority&appName=Cluster0
+- NODE_ENV=development 
+- SALT_ROUND=10
+- JWT_ACCESS_SECRET=60e293b8467e97160670d73356bdaf971080e1d875804e421033b7071934cbf5
 
-JWT_ACCESS_EXPIRES_IN=7d
+- JWT_ACCESS_EXPIRES_IN=7d
+- 
+- JWT_REFRESH_SECRET=282d3e07af31b013614fd7bb7e9753a5baac9431ecff2e5a2a29cfa976c5c4e9
 
-JWT_REFRESH_SECRET=282d3e07af31b013614fd7bb7e9753a5baac9431ecff2e5a2a29cfa976c5c4e9
-
-JWT_REFRESH_EXPIRES_IN=30d  
+- JWT_REFRESH_EXPIRES_IN=30d  
 
 Usage
 Use a tool like Postman to interact with the API.
