@@ -1,5 +1,5 @@
 import httpStatus from 'http-status';
-import AppError from '../../error/AppError';
+import AppError from '../../error/appError';
 import { Rental } from './rental.model';
 import { TRental } from './rental.interface';
 import { Bike } from '../bike/bike.model';
