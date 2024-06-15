@@ -1,6 +1,6 @@
 # Bike Rental Service
 
-A bike rental service API built using Node.js, Express, and MongoDB.
+A bike rental service API built using Node.js, Express, TypeScript and MongoDB .
 
 ## Introduction
 
@@ -46,9 +46,9 @@ Before you begin, ensure you have the following installed:
 Service Routes:
 
 - POST /api/bike: Create a Service. (Only Accessible by Admin)
-- ET /api/bike/:id: Get a Service.
-- ET /api/bike: Get all Services.
-- UT /api/bike/:id: Update Services (Only Accessible by Admin)
+- GET /api/bike/:id: Get a Service.
+- GET /api/bike: Get all Services.
+- PUT /api/bike/:id: Update Services (Only Accessible by Admin)
 - DELETE /api/bike/:id: Delete (Soft Delete) a Service (Only Accessible by Admin)
 
 
