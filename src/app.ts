@@ -11,12 +11,19 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 
+// server root route running 
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Welcome to bike rental Services server',
+  });
+});
 //routes
 app.use('/api', router);
 
 app.use(globalErrorHandler);
 
 app.use(notFound);
+
 
 
 app.get('/', (req: Request, res: Response) =>

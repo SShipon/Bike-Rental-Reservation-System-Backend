@@ -17,5 +17,10 @@ app.use((0, cors_1.default)());
 app.use('/api', routes_1.default);
 app.use(globalErrorHandler_1.default);
 app.use(notFound_1.default);
+app.get('/', (req, res) => {
+    res.json({
+        message: 'Welcome to bike rental Services server',
+    });
+});
 app.get('/', (req, res) => res.send(`Server is running fine!`));
 exports.default = app;

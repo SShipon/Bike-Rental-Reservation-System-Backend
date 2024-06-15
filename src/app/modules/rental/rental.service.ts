@@ -46,7 +46,7 @@ const createRentalIntoDB = async (
 
   return rental;
 };
-
+// updateRental and bike data 
 const updateRentalAndBikeAfterReturnIntoDB = async (rentalId: string) => {
   // checking if rental is available
   const rental = await Rental.findOne({ _id: rentalId });
@@ -111,6 +111,8 @@ const updateRentalAndBikeAfterReturnIntoDB = async (rentalId: string) => {
 
   return updatedRental;
 };
+
+// get all rentals data updated
 
 const getAllRentalsFromDB = async () => {
   const rentals = await Rental.find();
