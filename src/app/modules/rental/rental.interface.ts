@@ -1,0 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Types } from 'mongoose';
+
+export type TRental = {
+  userId: Types.ObjectId;
+  bikeId: Types.ObjectId;
+  startTime: Date;
+  returnTime: Date;
+  totalCost: number;
+  isReturned: boolean;
+};
