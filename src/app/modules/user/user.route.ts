@@ -9,6 +9,7 @@ router.get(
   '/me',
   auth(USER_ROLE.user, USER_ROLE.admin),
   userControllers.profile,
+
 );
 router.put(
   '/me',

@@ -6,7 +6,7 @@ const loginValidationSchema = z.object({
       .string({
         required_error: 'Email is required',
         invalid_type_error: 'Email must be a string',
-      }) 
+      })
       .email({ message: 'Email must be a valid email address' })
       .toLowerCase()
       .trim(),
