@@ -36,12 +36,34 @@ Before you begin, ensure you have the following installed:
 - npm
 - MongoDB
 
+
+
+## API Documentation
+
+- Authentication Routes:
+- POST /api/auth/signUp: Register a new user.
+- POST /api/auth/login: Log in an existing user.
+Service Routes:
+
+- POST /api/bike: Create a Service. (Only Accessible by Admin)
+- ET /api/bike/:id: Get a Service.
+- ET /api/bike: Get all Services.
+- UT /api/bike/:id: Update Services (Only Accessible by Admin)
+- DELETE /api/bike/:id: Delete (Soft Delete) a Service (Only Accessible by Admin)
+
+
+- POST /api/rentals: Book a Service (Only Accessible by User).
+- GET /api/rentals/ Get All service (Only Accessible by Admin).
+- PUT /api/rentals/id/return Get User's service (Only Accessible by User).
+
 ## Installation
 
 1. Clone the repository:
    git clone https://github.com/SShipon/Bike-Rental-Reservation-System-Backend.git
    cd Bike-Rental-Reservation-System-Backend
-   npm install
+   npm install 
+   npm run build / tsc
+   npm run start:dev
 
 PORT=5000
 DATABASE_URL=mongodb+srv://BikeRentals-Server-2:7M882MNdONC6Aixl@cluster0.u675lb8.mongodb.net/BikeRentals?retryWrites=true&w=majority&appName=Cluster0
@@ -55,21 +77,7 @@ JWT_REFRESH_SECRET=282d3e07af31b013614fd7bb7e9753a5baac9431ecff2e5a2a29cfa976c5c
 
 JWT_REFRESH_EXPIRES_IN=30d  
 
-sh
-Copy code
-npm start
 Usage
 Use a tool like Postman to interact with the API.
 
-Creating a Rental
-Endpoint: POST /api/rentals
-Headers:
-Authorization: Bearer Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Njc0ODljNmRkYzFkNmU3YTVlMzliZjgiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTg5MTM1MDcsImV4cCI6MTcxOTUxODMwN30.hUZ_JzYF5CQggQ3fx1kw6I89NsBdL_ktnWZUXj6WTm8
-Body:
-json
-Copy code
 
-Returning a Rental
-Endpoint: PUT /api/rentals/:id/return
-Headers:
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Njc0ODljNmRkYzFkNmU3YTVlMzliZjgiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTg5MTM1MDcsImV4cCI6MTcxOTUxODMwN30.hUZ_JzYF5CQggQ3fx1kw6I89NsBdL_ktnWZUXj6WTm8
