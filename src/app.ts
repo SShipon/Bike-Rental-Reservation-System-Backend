@@ -18,6 +18,7 @@ app.use(globalErrorHandler);
 
 app.use(notFound);
 
+
 app.get('/', (req: Request, res: Response) =>
   res.send(`Server is running fine!`),
 );
