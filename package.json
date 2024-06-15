@@ -1,5 +1,5 @@
 {
-  "name": "car-washing-system",
+  "name": "bike-rentals-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -46,3 +46,9 @@
     "typescript-eslint": "^7.13.0"
   }
 }
+
+
+
+
+
+
