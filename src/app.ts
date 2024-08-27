@@ -13,7 +13,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: [
-      'http://localhost:5173',
+      'http://localhost:5174',
       'https://api.imgbb.com/1/upload',
     ],
     credentials: true,
