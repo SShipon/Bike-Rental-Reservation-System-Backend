@@ -18,7 +18,7 @@
     "mongoose",
     "zod"
   ],
-  "author": "Sourave Halder",
+  "author": "shipon",
   "license": "ISC",
   "dependencies": {
     "@types/bcryptjs": "^2.4.6",

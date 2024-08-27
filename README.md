@@ -1,285 +1,107 @@
-# Project Overview
+## BIKE BOOKER
 
-# Project Name: Bike rental service for tourists or locals.
-
-# Live URL:
-
-```bash
-https://bike-booker.vercel.app
+## Live URL
+```js
+https://bike-rental-client-zeta.vercel.app/
 ```
 
-# Project description
+# Introduction
 
-This is bike rental backend project. This project we use major great technologies like Typescript, mongoose, zod, express.js etc. This project using we can create user with role like admin and user. Bike rental project using any tourist rent bike and when tourist back admin dynamically know how much amount red this bike this tourist.
+Bike Booker is a Bike rental service. People can rent bike using this website. There are two user 1. Admin, 2. User. Admin handle to add Bikes and show that home page and other page. People can see the bike and rent this bike form this dashboard. Make sure user Pay for rent bike 100 TK first then booking bike.
 
-# Technologies Used
+# Project Description
 
-- Typescript (Programming language)
-- Express.js (Node.js framework)
-- Mongoose (MongoDB ORM)
-- Zod (Validation Library)
-- Bcrypt.js (Secure Password)
-- jsonwebtoken (authentication and authorization)
-- Eslint (Error showing)
-- Prettier (Format code)
+Bike Booker is a bike rental service where people can rent bikes using the website. There are two types of users: Admin and User. Admins are responsible for adding bikes to the system and displaying them on the home page and other relevant pages. Users can browse the available bikes, view details, and rent them from their dashboard. To rent a bike, users must first pay a fee of 100 TK. Once the payment is made, the booking is confirmed, and users can see their rental details in their dashboard. The system ensures a smooth rental process with secure payment handling, making it easy for users to rent bikes and for admins to manage bike listings and bookings.
 
 # Features
 
-* SignUp and Login Admin
-* SignUp and Login User
-* Create Bike for client
-* Authentication
-* Authorization
-* Rent Bikes
-* Secure Password
+- Search Bikes
+- Comparison Bikes
+- Dark Mode
+- Mobile Responsive
+- Animation
+- Wheel Spinner for Coupon
+- Dashboard Role based
+- Payment System
+- Filter Options
 
+# Technology Stack
 
-# Backend server setup and how to running
+- React
+- Redux
+- React Router Dom
+- Typescript
+- Farmer Motion
+- Lucid Icons
+- Shadecn
+- TailwindCSS
+- Redux persist
+- ZOD
+- React Hook Form
+- Moment.js
 
-# step-1: initialize npm and setup basic express server
+## Installation Guideline
 
-Initialize node package manager(NPM) with default input
+First clone the project then must you have node.js 18+ version. Then open the code editor and. Install node modules and run the project. One thing you must have the backend integrations. You change the baseApi.ts file.
 
-```javascript
-npm init -y
+# Prerequisite
+
+- Node.js (18+ version)
+- Code Editor
+
+# Installation Steps
+
+1. First Clone the project main branch
+
+```js
+https://github.com/souravh093/bike-rental-client.git
 ```
 
-Install the express, cors, jsonwebtoken, and dotenv package
+2. Open you terminal and change directory to the project directory
+3. Install all package are added in the package.json file
 
-```javascript
-npm install express cors dotenv jsonwebtoken
+```js
+npm install
 ```
 
-Install bcrypt.js for secure password
+4. Then open the project in your code editor
+5. Find the baseApi.ts file
+6. Replace the base url to live url
 
-```
-npm install bcrypt.js
-```
-
-Make folder structure using modular pattern
-
-```javascript
-src
-    app
-      middleware
-      errors
-      routes
-      utils
-      interfaces
-      config
-        index.ts
-      modules
-        users
-            ...files
-        bike
-            ...fils
-        booking
-            ...files
-    app.ts
-    server.ts
+```js
+baseUrl: "https://bike-booker.vercel.app",
+||
+baseUrl: "http://localhost:5000/api",
 ```
 
-Install types of node, express, and cors
+7. Run the project your terminal
 
-```javascript
-npm i --save-dev @types/cors @types/node @types/express
+```js
+npm run dev
 ```
 
-# step-2: initialize typescript with related package
+8. Deploy then first command
 
-Install typescript developer dependency
-
-```javascript
-npm install -D typescript
 ```
-
-Initialize typescript and configuration it the tsconfig.json
-
-```javascript
-tsc --init
-```
-
-In the tsconfig change the root directory and out directory destination. (Note: uncomment the rootDir and outDir)
-
-```javascript
-"rootDir": "./src",
-"outDir": "./dist",
-```
-
-Run typescript code install ts-node-dev as developer dependency
-
-```javascript
-npm install -D ts-node-dev
-```
-
-# step-3: install mongoose and connect with project and .env code add
-
-Install mongoose
-
-```javascript
-npm install mongoose
-```
-
-Connect with mongoose this following code
-
-```javascript
-import mongoose from 'mongoose';
-import config from './app/config';
-import app from './app';
-
-async function main() {
-  try {
-    await mongoose.connect(config.database_url as string);
-
-    app.listen(config.port, () => {
-      console.log(`Server listening on port ${config.port}`);
-    });
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-main();
-```
-
-# step-4: install eslint and prettier for typescript
-
-Install all package related eslint and prettier for typescript as developer dependency
-
-```javascript
-npm install --save-dev @typescript-eslint eslint-plugin @typescript-eslint/parser eslint eslint-config-prettier eslint-plugin-import eslint-plugin-prettier prettier
-```
-
-File: tsconfig.json add below this two line inside first object
-
-```javascript
-"include": ["./src/**/*.tsx", "./src/**/*.ts"],
-"exclude": ["node_modules", "test/**/*.ts"]
-```
-
-Past this initialize configuration .eslintrc anytime we can change the configuration what we want
-
-```javascript
-{
-  "parser": "@typescript-eslint/parser",
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier"
-  ],
-  "plugins": ["prettier"],
-  "parserOptions": {
-    "ecmaVersion": 2018,
-    "sourceType": "module"
-  },
-  "rules": {
-    "no-unused-expressions": "error",
-    "prefer-const": "error",
-    "no-console": "warn",
-    "@typescript-eslint/no-unused-vars": "error"
-  },
-  "globals": {
-    "process": "readonly"
-  }
-}
-```
-
-Ignore linting this folder
-
-```javascript
-node_modules;
-dist;
-```
-
-File: .prettierrc.json and this initialize configuration and we can change the
-
-```javascript
-{
-    "semi": true,
-    "singleQuote": true
-}
-```
-
-File: .prettierignore add this folder
-
-```javascript
-node_modules;
-dist;
-```
-
-# step-5: Configuration the package.json with script
-
-Main destination change that
-
-```javascript
-"main": "./dist/server.js",
-```
-
-Make the script for running project locally, build project, lint all file, fix problem using lint, and format code using prettier.
-
-```javascript
-  "scripts": {
-    "build": "tsc",
-    "start:prod": "node ./dist/server.js",
-    "start:dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
-    "lint": "eslint src/**/*.ts",
-    "fix": "eslint src/**/*.ts --fix",
-    "format": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-```
-
-# step-6: Install ZOD OR JOI validation package
-
-Install ZOD package
-
-```javascript
-npm install zod
-```
-
-Install JOI package
-
-```javascript
-npm install joi
-```
-
-# step-7: Run project locally
-
-step-7.1
-Run eslint
-
-```javascript
-npm run lint
-```
-
-step-7.2
-Run prettier
-
-```javascript
-npm run format
-```
-
-step-7.3
-Build project
-
-```javascript
 npm run build
 ```
 
-step-7.4
-Run javascript file
+# Configuration
 
-```javascript
-npm run start:prod
-```
+N/A
 
-step-7.5
-Run locally typescript file
+## Usage
 
-```javascript
-npm run start:dev
-```
+1. Home page: There first show the search section in the hero section search you want or down have the available bike section go there.
+2. Check you all info from there and interested then click the view details button
+3. If you are not sign-up then when you click the button for book bike then you move to the login page.
+4. Sign up account
+5. Login you Account
+6. Go to Bke details page again same journey
+7. Set you start time for booking bike
+8. Pay advance 100TK for some additional service
+9. Come to you rental page when you current bike option.
+10. Admin if returned the bike then you pay form price per hour amount
+11. Then Enjoy if you want other bike for rent
 
-Author: Sourave Halder
-
-# Thank You for Scrolling my Readme file
+### Thank You
