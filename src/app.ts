@@ -13,7 +13,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: [
-      'https://bike-rental-client.vercel.app/',
+      'https://bike-rental-client.vercel.app',
       'https://api.imgbb.com/1/upload',
     ],
     credentials: true,
