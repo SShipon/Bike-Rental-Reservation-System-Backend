@@ -2,7 +2,7 @@
 
 ## Live URL
 ```js
-https://bike-rental-client-zeta.vercel.app/
+  https://bike-rental-client.vercel.app/
 ```
 
 # Introduction
@@ -54,7 +54,7 @@ First clone the project then must you have node.js 18+ version. Then open the co
 1. First Clone the project main branch
 
 ```js
-https://github.com/souravh093/bike-rental-client.git
+https://github.com/SShipon/Bike-Rental-Reservation-System-Backend.git
 ```
 
 2. Open you terminal and change directory to the project directory
@@ -69,7 +69,7 @@ npm install
 6. Replace the base url to live url
 
 ```js
-baseUrl: "https://bike-booker.vercel.app",
+
 ||
 baseUrl: "http://localhost:5000/api",
 ```
