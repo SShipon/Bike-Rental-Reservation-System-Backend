@@ -1,54 +1,57 @@
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
-import { authServices } from './auth.service';
+import { AuthService } from './auth.service';
 import config from '../../config';
 
-const signup = catchAsync(async (req, res) => {
-  const result = await authServices.signupUserIntoDB(req.body);
+// create user controller
+const signupUser = catchAsync(async (req, res) => {
+  const result = await AuthService.signupUser(req.body);
 
-  return sendResponse(res, {
-    statusCode: httpStatus.CREATED,
+  sendResponse(res, {
     success: true,
+    statusCode: httpStatus.CREATED,
     message: 'User registered successfully',
     data: result,
   });
 });
 
-const login = catchAsync(async (req, res) => {
-  const result = await authServices.loginUserFromDB(req.body);
+// login user controller
+const loginUser = catchAsync(async (req, res) => {
+  const result = await AuthService.loginUser(req.body);
 
-  const { user, accessToken, refreshToken } = result;
+  const { accessToken, refreshToken, data } = result;
 
   res.cookie('refreshToken', refreshToken, {
     secure: config.node_env === 'production',
     httpOnly: true,
+    sameSite: true,
+    maxAge: 1000 * 60 * 60 * 24 * 365,
   });
 
-  return sendResponse(res, {
-    statusCode: httpStatus.OK,
+  sendResponse(res, {
     success: true,
+    statusCode: httpStatus.OK,
     message: 'User logged in successfully',
     token: accessToken,
-    data: user,
+    data,
   });
 });
 
 const refreshToken = catchAsync(async (req, res) => {
   const { refreshToken } = req.cookies;
+  const result = await AuthService.refreshToken(refreshToken);
 
-  const result = await authServices.refreshToken(refreshToken);
-
-  return sendResponse(res, {
+  sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Access token retrieved successfully!',
+    message: 'Access token is retrieved successfully!',
     data: result,
   });
 });
 
-export const authControllers = {
-  signup,
-  login,
+export const AuthController = {
+  signupUser,
+  loginUser,
   refreshToken,
 };

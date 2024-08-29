@@ -1,109 +1,36 @@
 import { z } from 'zod';
 
-const bikeValidationSchema = z.object({
+// create bike document to validate using zod
+const createBikeValidation = z.object({
   body: z.object({
-    name: z
-      .string({
-        required_error: 'Bike name is required',
-        invalid_type_error: 'Bike name must be a string',
-      })
-      .trim(),
-
-    description: z
-      .string({
-        required_error: 'Bike description is required',
-        invalid_type_error: 'Bike description must be a string',
-      })
-      .trim(),
-    pricePerHour: z
-      .number({
-        required_error: 'Price per hour is required',
-        invalid_type_error: 'Price per hour must be a number',
-      })
-      .min(1, { message: 'Price per hour must be at least 1 digits' }),
-    cc: z
-      .number({
-        required_error: 'Bike CC is required',
-        invalid_type_error: 'Bike CC must be a number',
-      })
-      .min(2, { message: 'Bike CC must be at least 2 digits' }),
-    year: z
-      .number({
-        required_error: 'Bike manufacturing year is required',
-        invalid_type_error: 'Bike manufacturing year must be a number',
-      })
-      .min(4, { message: 'Bike manufacturing year must be at least 4 digits' }),
-    model: z
-      .string({
-        required_error: 'Bike model is required',
-        invalid_type_error: 'Bike model must be a string',
-      })
-      .trim(),
-    brand: z
-      .string({
-        required_error: 'Bike brand is required',
-        invalid_type_error: 'Bike brand must be a string',
-      })
-      .trim(),
+    name: z.string({ required_error: 'Name is Required' }),
+    description: z.string({ required_error: 'Description is Required' }),
+    pricePerHour: z.number({ required_error: 'Price per hour is Required' }),
+    isAvailable: z.boolean().optional(),
+    image: z.string({ required_error: 'Image is required' }),
+    cc: z.number({ required_error: 'CC is Required' }),
+    year: z.number({ required_error: 'Year is Required' }),
+    model: z.string({ required_error: 'Model is Required' }),
+    brand: z.string({ required_error: 'Brand is Required' }),
   }),
 });
 
-const updateBikeValidationSchema = z.object({
+// update bike document to validate using zod
+const updateBikeValidation = z.object({
   body: z.object({
-    name: z
-      .string({
-        required_error: 'Bike name is required',
-        invalid_type_error: 'Bike name must be a string',
-      })
-      .trim()
-      .optional(),
-
-    description: z
-      .string({
-        required_error: 'Bike description is required',
-        invalid_type_error: 'Bike description must be a string',
-      })
-      .trim()
-      .optional(),
-    pricePerHour: z
-      .number({
-        required_error: 'Price per hour is required',
-        invalid_type_error: 'Price per hour must be a number',
-      })
-      .min(1, { message: 'Price per hour must be at least 1 digits' })
-      .optional(),
-    cc: z
-      .number({
-        required_error: 'Bike CC is required',
-        invalid_type_error: 'Bike CC must be a number',
-      })
-      .min(2, { message: 'Bike CC must be at least 2 digits' })
-      .optional(),
-    year: z
-      .number({
-        required_error: 'Bike manufacturing year is required',
-        invalid_type_error: 'Bike manufacturing year must be a number',
-      })
-      .min(4, { message: 'Bike manufacturing year must be at least 4 digits' })
-      .optional(),
-    model: z
-      .string({
-        required_error: 'Bike model is required',
-        invalid_type_error: 'Bike model must be a string',
-      })
-      .trim()
-      .optional(),
-    brand: z
-      .string({
-        required_error: 'Bike brand is required',
-        invalid_type_error: 'Bike brand must be a string',
-      })
-      .trim()
-      .optional(),
+    name: z.string().optional(),
+    description: z.string().optional(),
+    pricePerHour: z.number().optional(),
+    isAvailable: z.boolean().optional(),
+    image: z.string().url().optional(),
+    cc: z.number().optional(),
+    year: z.number().optional(),
+    model: z.string().optional(),
+    brand: z.string().optional(),
   }),
 });
 
-export const bikeValidations = {
-  bikeValidationSchema,
-  updateBikeValidationSchema,
+export const BikeValidations = {
+  createBikeValidation,
+  updateBikeValidation,
 };

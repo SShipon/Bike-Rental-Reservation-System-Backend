@@ -1,33 +1,38 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
-import router from './app/routes';
-import notFound from './app/middlewares/notFound';
-import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import cookieParser from 'cookie-parser';
+import router from './app/routes';
+import { globalErrorHandler } from './app/middlewares/globalErrorHandler';
+import notFoundRoute from './app/middlewares/notFroundRoute';
 
 const app: Application = express();
 
+// parsers
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      'https://bike-rental-client-zeta.vercel.app',
+      'https://api.imgbb.com/1/upload',
+    ],
+    credentials: true,
+  }),
+);
 
-// server root route running 
-app.get('/', (req, res) => {
-  res.json({
-    message: 'Welcome to bike rental Services server',
-  });
-});
-//routes
+// app routes
 app.use('/api', router);
 
+// global error handle zod, mongoose, custom error, error, cast error etc..
 app.use(globalErrorHandler);
 
-app.use(notFound);
+app.get('/', (req: Request, res: Response) => {
+  res.json({
+    message: 'Bike Rental Server Running...',
+  });
+});
 
-
-
-app.get('/', (req: Request, res: Response) =>
-  res.send(`Server is running fine!`),
-);
+// not found route
+app.use(notFoundRoute);
 
 export default app;

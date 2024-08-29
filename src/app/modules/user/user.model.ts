@@ -1,42 +1,36 @@
-/* eslint-disable @typescript-eslint/no-this-alias */
 import { Schema, model } from 'mongoose';
-import { TUser } from './user.interface';
-import bcryptjs from 'bcryptjs';
+import { TUser, UserModel } from './user.interface';
+import bcrypt from 'bcryptjs';
 import config from '../../config';
 
-const userSchema = new Schema<TUser>(
+// make user schema model using mongoose one more layer validation
+const userSchema = new Schema<TUser, UserModel>(
   {
     name: {
       type: String,
-      required: [true, 'Name is required.'],
-      trim: true,
+      required: true,
     },
     email: {
       type: String,
-      required: [true, 'Email is required.'],
-      trim: true,
+      required: true,
       unique: true,
     },
     password: {
       type: String,
-      required: [true, 'Password is required.'],
+      required: true,
       select: 0,
     },
     phone: {
       type: String,
-      required: [true, 'Phone number is required.'],
-      trim: true,
+      required: true,
     },
     address: {
       type: String,
-      required: [true, 'Address is required.'],
-      trim: true,
+      required: true,
     },
     role: {
       type: String,
-      enum: ['admin', 'user'],
-      default: 'user',
-      trim: true,
+      required: true,
     },
   },
   {
@@ -44,13 +38,34 @@ const userSchema = new Schema<TUser>(
   },
 );
 
+// secure password
 userSchema.pre('save', async function (next) {
-  const user = this;
-
-  // hashing the password
-  user.password = await bcryptjs.hash(user.password, Number(config.salt_round));
+  this.password = await bcrypt.hash(
+    this.password,
+    Number(config.bcrypt_salt_rounds),
+  );
 
   next();
 });
 
-export const User = model<TUser>('User', userSchema);
+// remove password form my response
+userSchema.methods.toJSON = function () {
+  const user = this.toObject();
+  delete user.password;
+  return user;
+};
+
+// compare password static method
+userSchema.statics.isPasswordMatched = async function (
+  plainTextPassword,
+  hashPassword,
+) {
+  return bcrypt.compare(plainTextPassword, hashPassword);
+};
+
+// check user exists provide user email then send true
+userSchema.statics.isUserExistsByEmail = async function (email: string) {
+  return await User.findOne({ email }).select('+password');
+};
+
+export const User = model<TUser, UserModel>('User', userSchema);

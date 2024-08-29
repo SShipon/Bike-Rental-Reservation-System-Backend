@@ -1,94 +1,62 @@
 import { z } from 'zod';
-import { USER_ROLE } from './user.constant';
 
-const userValidationSchema = z.object({
+// create user validation using zod
+const createUserValidationSchema = z.object({
   body: z.object({
-    name: z
-      .string({
-        required_error: 'Name is required',
-        invalid_type_error: 'Name must be a string',
-      })
-      .trim(),
-
-    email: z
-      .string({
-        required_error: 'Email is required',
-        invalid_type_error: 'Email must be a string',
-      })
-      .email({ message: 'Email must be a valid email address' })
-      .toLowerCase()
-      .trim(),
+    name: z.string({ required_error: 'Name is required' }),
+    email: z.string({ required_error: 'Email is required' }).email(),
     password: z
-      .string({
-        required_error: 'Password is required',
-        invalid_type_error: 'Password must be a string',
-      })
-      .trim()
-      .min(6, { message: 'Password must be at least 6 character' }),
-    phone: z
-      .string({
-        required_error: 'Phone number is required',
-        invalid_type_error: 'Phone number must be a string',
-      })
-      .trim()
-      .min(11, { message: 'Phone number must be at least 11 digits' }),
-    address: z
-      .string({
-        required_error: 'address is required',
-        invalid_type_error: 'address must be a string',
-      })
-      .trim(),
-    role: z.nativeEnum(USER_ROLE).default(USER_ROLE.user),
+      .string({ required_error: 'Password is required' })
+      .min(2, { message: 'Password need more than 2 characters' })
+      .max(20, 'Password need less than 20 characters'),
+    phone: z.string({ required_error: 'Phone number is required' }),
+    address: z.string({ required_error: 'Address is required' }),
+    role: z.string({ required_error: 'Role is required' }),
   }),
 });
 
+// update user validation using zod
 const updateUserValidationSchema = z.object({
   body: z.object({
-    name: z
-      .string({
-        required_error: 'Name is required',
-        invalid_type_error: 'Name must be a string',
-      })
-      .trim()
-      .optional(),
-
-    email: z
-      .string({
-        required_error: 'Email is required',
-        invalid_type_error: 'Email must be a string',
-      })
-      .email({ message: 'Email must be a valid email address' })
-      .toLowerCase()
-      .trim()
-      .optional(),
+    name: z.string({ required_error: 'Name is required' }).optional(),
+    email: z.string({ required_error: 'Email is required' }).email().optional(),
     password: z
-      .string({
-        required_error: 'Password is required',
-        invalid_type_error: 'Password must be a string',
-      })
-      .trim()
-      .min(6, { message: 'Password must be at least 6 character' })
+      .string({ required_error: 'Password is required' })
+      .min(2, { message: 'Password need more than 2 characters' })
+      .max(20, 'Password need less than 20 characters')
       .optional(),
-    phone: z
-      .string({
-        required_error: 'Phone number is required',
-        invalid_type_error: 'Phone number must be a string',
-      })
-      .trim()
-      .min(11, { message: 'Phone number must be at least 11 digits' })
-      .optional(),
-    address: z
-      .string({
-        required_error: 'address is required',
-        invalid_type_error: 'address must be a string',
-      })
-      .trim()
-      .optional(),
-    role: z.nativeEnum(USER_ROLE).default(USER_ROLE.user).optional(),
+    phone: z.string({ required_error: 'Phone number is required' }).optional(),
+    address: z.string({ required_error: 'Address is required' }).optional(),
+    role: z.string({ required_error: 'Role is required' }).optional(),
   }),
 });
 
-export const userValidations = {
-  userValidationSchema,
+// login user validation using zod
+const loginUserValidationSchema = z.object({
+  body: z.object({
+    email: z.string({ required_error: 'Email is required' }),
+    password: z.string({ required_error: 'Password is Required' }),
+  }),
+});
+
+const refreshTokenValidationSchema = z.object({
+  cookies: z.object({
+    refreshToken: z.string({
+      required_error: 'Refresh token is required!',
+    }),
+  }),
+});
+
+const updateRoleValidationSchema = z.object({
+  body: z.object({
+    role: z.string({ required_error: 'Role is Required' }),
+  }),
+});
+
+export const UserValidation = {
+  createUserValidationSchema,
   updateUserValidationSchema,
+  loginUserValidationSchema,
+  refreshTokenValidationSchema,
+  updateRoleValidationSchema
 };

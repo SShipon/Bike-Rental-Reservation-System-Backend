@@ -1,29 +1,29 @@
-import express from 'express';
-
-import { bikeControllers } from './bike.controller';
+import { Router } from 'express';
 import validateRequest from '../../middlewares/validateRequest';
-import { bikeValidations } from './bike.validation';
+import { BikeValidations } from './bike.validation';
+import { BikeController } from './bike.controller';
 import auth from '../../middlewares/auth';
-import { USER_ROLE } from '../user/user.constant';
 
-const router = express.Router();
+const router = Router();
 
+// assign bike routes
 router.post(
   '/',
-  auth(USER_ROLE.admin),
-  validateRequest(bikeValidations.bikeValidationSchema),
-  bikeControllers.createBike,
+  auth('admin'),
+  validateRequest(BikeValidations.createBikeValidation),
+  BikeController.createBike,
 );
 
-router.get('/', bikeControllers.getAllBikes);
+router.get('/', BikeController.getAllBikes);
+router.get('/:id', BikeController.singleBike);
 
 router.put(
   '/:id',
-  auth(USER_ROLE.admin),
-  validateRequest(bikeValidations.updateBikeValidationSchema),
-  bikeControllers.updateBike,
+  auth('admin'),
+  validateRequest(BikeValidations.updateBikeValidation),
+  BikeController.updateBike,
 );
 
-router.delete('/:id', auth(USER_ROLE.admin), bikeControllers.deleteBike);
+router.delete('/:id', auth('admin'), BikeController.deleteBike);
 
-export const bikeRoutes = router;
+export const BikeRoutes = router;

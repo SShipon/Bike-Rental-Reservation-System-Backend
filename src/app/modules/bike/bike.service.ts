@@ -1,58 +1,78 @@
 import httpStatus from 'http-status';
-import AppError from '../../error/appError';
+import AppError from '../../errors/AppError';
 import { TBike } from './bike.interface';
 import { Bike } from './bike.model';
+import QueryBuilder from '../../builder/QueryBuilder';
 
+// insert bike information data into database using mongoose
 const createBikeIntoDB = async (payload: TBike) => {
-  // checking if the bike is already exists
-  const alreadyExists = await Bike.findOne({
-    $and: [{ model: payload.model }, { brand: payload.brand }],
-  });
+  console.log(payload);
+  const result = await Bike.create(payload);
 
-  if (alreadyExists)
-    throw new AppError(httpStatus.BAD_REQUEST, 'This bike already exists');
+  return result;
+};
 
-  const bike = await Bike.create(payload);
+// get all bikes form database
+const getAllBikesFromDB = async (query: Record<string, unknown>) => {
+  const bikeQuery = new QueryBuilder(Bike.find(), query)
+    .search(['name'])
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
 
-  if (!bike) {
-    throw new AppError(httpStatus.BAD_REQUEST, 'Could not create the bike');
+  const result = await bikeQuery.modelQuery;
+
+  const meta = await bikeQuery.countTotal();
+
+  return {
+    meta,
+    result,
+  };
+};
+
+const getSingleBikeFromDB = async (id: string) => {
+  const findBike = await Bike.findById(id);
+
+  if (!findBike) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Bike not found');
   }
 
-  return bike;
+  return findBike;
 };
 
-const updateBikeFromDB = async (id: string, payload: Partial<TBike>) => {
-  const updatedBike = await Bike.findByIdAndUpdate({ _id: id }, payload, {
-    new: true,
-  });
+// update bike from database
+const updateBikeIntoDB = async (payload: Partial<TBike>, id: string) => {
+  // check the requested update bike are available
+  const findBike = await Bike.findById(id);
 
-  if (!updatedBike)
-    throw new AppError(httpStatus.BAD_REQUEST, 'Could not update the bike');
+  if (!findBike) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Bike not found');
+  }
 
-  return updatedBike;
+  const result = await Bike.findByIdAndUpdate(id, payload, { new: true });
+
+  return result;
 };
 
-const getAllBikesFromDB = async () => {
-  const bikes = await Bike.find();
-
-  if (!bikes)
-    throw new AppError(httpStatus.NOT_FOUND, 'Could not find the bikes');
-
-  return bikes;
-};
-
+// delete bike from database
 const deleteBikeFromDB = async (id: string) => {
-  const bike = await Bike.findByIdAndDelete(id);
+  // check the requested delete bike are available
+  const findBike = await Bike.findById(id);
 
-  if (!bike)
-    throw new AppError(httpStatus.NOT_FOUND, 'Could not delete the bike');
+  if (!findBike) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Bike not found');
+  }
 
-  return bike;
+  const result = await Bike.findByIdAndDelete(id, { new: true });
+
+  return result;
 };
 
-export const bikeServices = {
+export const BikeServices = {
   createBikeIntoDB,
   getAllBikesFromDB,
-  updateBikeFromDB,
+  updateBikeIntoDB,
   deleteBikeFromDB,
+  getSingleBikeFromDB,
 };

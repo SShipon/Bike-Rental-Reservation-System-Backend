@@ -1,20 +1,32 @@
-import express from 'express';
+import { Router } from 'express';
+import { UserController } from './user.controller';
 import auth from '../../middlewares/auth';
-import { USER_ROLE } from './user.constant';
-import { userControllers } from './user.controller';
+import validateRequest from '../../middlewares/validateRequest';
+import { UserValidation } from './user.validation';
 
-const router = express.Router();
+const router = Router();
 
-router.get(
-  '/me',
-  auth(USER_ROLE.user, USER_ROLE.admin),
-  userControllers.profile,
+// assign user routes
 
-);
+// get profile for user
+router.get('/me', auth('admin', 'user'), UserController.getUserProfile);
+router.get('/all', auth('admin'), UserController.getAllUsers);
+
+// update profile for user
 router.put(
   '/me',
-  auth(USER_ROLE.user, USER_ROLE.admin),
-  userControllers.updateProfile,
+  auth('admin', 'user'),
+  validateRequest(UserValidation.updateUserValidationSchema),
+  UserController.updateUserProfile,
 );
 
-export const userRoutes = router;
+router.put(
+  '/role/:id',
+  auth('admin'),
+  validateRequest(UserValidation.updateRoleValidationSchema),
+  UserController.updateRole,
+);
+
+router.delete('/:id', auth('admin'), UserController.deleteUsers);
+
+export const UserRoutes = router;

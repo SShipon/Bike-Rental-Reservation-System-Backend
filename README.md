@@ -1,83 +1,285 @@
-# Bike Rental Service
+# Project Overview
 
-A bike rental service API built using Node.js, Express, TypeScript and MongoDB .
+# Project Name: Bike rental service for tourists or locals.
 
-## Introduction
+# Live URL:
 
-This project is a bike rental service API that allows users to rent and return bikes. The API includes endpoints for creating rentals, returning rentals, and viewing all rentals. It handles user authentication using JWT tokens and ensures proper error handling.
+```bash
+https://bike-booker.vercel.app
+```
 
-## Features
+# Project description
 
-- **User Authentication**: Users can sign up, log in, and see their services.
-- **Services Management**: Customers can select a preferred date and time slot for their bike rental reservation.
-- **Service and Rental Management**: Admin can create different bike rental services and manage them. Admin can also update availability.
-- **Error Handling**: Proper error messages are displayed for invalid inputs or failed operations.
-- Create a rental
-- Return a rental
-- View all rentals
-- JWT authentication
-- Error handling
+This is bike rental backend project. This project we use major great technologies like Typescript, mongoose, zod, express.js etc. This project using we can create user with role like admin and user. Bike rental project using any tourist rent bike and when tourist back admin dynamically know how much amount red this bike this tourist.
 
-## Technology Stack
+# Technologies Used
 
-- **Programming Language**: TypeScript
-- **Web Framework**: Express.js
-- **Database**: MongoDB (using Mongoose for ODM)
-- **Validation**: Zod Validations
-- **Authentication**: JSON Web Tokens (JWT)
-- **Error Handling**: Custom middleware
-- **Deployment**: Deployed on Vercel
+- Typescript (Programming language)
+- Express.js (Node.js framework)
+- Mongoose (MongoDB ORM)
+- Zod (Validation Library)
+- Bcrypt.js (Secure Password)
+- jsonwebtoken (authentication and authorization)
+- Eslint (Error showing)
+- Prettier (Format code)
 
-## Prerequisites
+# Features
 
-Before you begin, ensure you have the following installed:
-
-- Node.js
-- npm
-- MongoDB
+* SignUp and Login Admin
+* SignUp and Login User
+* Create Bike for client
+* Authentication
+* Authorization
+* Rent Bikes
+* Secure Password
 
 
+# Backend server setup and how to running
 
-## API Documentation
+# step-1: initialize npm and setup basic express server
 
-- Authentication Routes:
-- POST /api/auth/signUp: Register a new user.
-- POST /api/auth/login: Log in an existing user.
-Service Routes:
+Initialize node package manager(NPM) with default input
 
-- POST /api/bike: Create a Service. (Only Accessible by Admin)
-- GET /api/bike/:id: Get a Service.
-- GET /api/bike: Get all Services.
-- PUT /api/bike/:id: Update Services (Only Accessible by Admin)
-- DELETE /api/bike/:id: Delete (Soft Delete) a Service (Only Accessible by Admin)
+```javascript
+npm init -y
+```
 
+Install the express, cors, jsonwebtoken, and dotenv package
 
-- POST /api/rentals: Book a Service (Only Accessible by User).
-- GET /api/rentals/ Get All service (Only Accessible by Admin).
-- PUT /api/rentals/id/return Get User's service (Only Accessible by User).
+```javascript
+npm install express cors dotenv jsonwebtoken
+```
 
+Install bcrypt.js for secure password
 
-## Installation process guide 
-## Clone the repository:
-- git clone https://github.com/SShipon/Bike-Rental-Reservation-System-Backend.git
-- cd Bike-Rental-Reservation-System-Backend
-- npm install 
-- npm run build / tsc
-- npm run start:dev
+```
+npm install bcrypt.js
+```
 
-- PORT=5000
-- DATABASE_URL=mongodb+srv://BikeRentals-Server-2:7M882MNdONC6Aixl@cluster0.u675lb8.mongodb.net/BikeRentals?retryWrites=true&w=majority&appName=Cluster0
-- NODE_ENV=development 
-- SALT_ROUND=10
-- JWT_ACCESS_SECRET=60e293b8467e97160670d73356bdaf971080e1d875804e421033b7071934cbf5
+Make folder structure using modular pattern
 
-- JWT_ACCESS_EXPIRES_IN=7d
-- 
-- JWT_REFRESH_SECRET=282d3e07af31b013614fd7bb7e9753a5baac9431ecff2e5a2a29cfa976c5c4e9
+```javascript
+src
+    app
+      middleware
+      errors
+      routes
+      utils
+      interfaces
+      config
+        index.ts
+      modules
+        users
+            ...files
+        bike
+            ...fils
+        booking
+            ...files
+    app.ts
+    server.ts
+```
 
-- JWT_REFRESH_EXPIRES_IN=30d  
+Install types of node, express, and cors
 
-Usage
-Use a tool like Postman to interact with the API.
+```javascript
+npm i --save-dev @types/cors @types/node @types/express
+```
 
+# step-2: initialize typescript with related package
 
+Install typescript developer dependency
+
+```javascript
+npm install -D typescript
+```
+
+Initialize typescript and configuration it the tsconfig.json
+
+```javascript
+tsc --init
+```
+
+In the tsconfig change the root directory and out directory destination. (Note: uncomment the rootDir and outDir)
+
+```javascript
+"rootDir": "./src",
+"outDir": "./dist",
+```
+
+Run typescript code install ts-node-dev as developer dependency
+
+```javascript
+npm install -D ts-node-dev
+```
+
+# step-3: install mongoose and connect with project and .env code add
+
+Install mongoose
+
+```javascript
+npm install mongoose
+```
+
+Connect with mongoose this following code
+
+```javascript
+import mongoose from 'mongoose';
+import config from './app/config';
+import app from './app';
+
+async function main() {
+  try {
+    await mongoose.connect(config.database_url as string);
+
+    app.listen(config.port, () => {
+      console.log(`Server listening on port ${config.port}`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+main();
+```
+
+# step-4: install eslint and prettier for typescript
+
+Install all package related eslint and prettier for typescript as developer dependency
+
+```javascript
+npm install --save-dev @typescript-eslint eslint-plugin @typescript-eslint/parser eslint eslint-config-prettier eslint-plugin-import eslint-plugin-prettier prettier
+```
+
+File: tsconfig.json add below this two line inside first object
+
+```javascript
+"include": ["./src/**/*.tsx", "./src/**/*.ts"],
+"exclude": ["node_modules", "test/**/*.ts"]
+```
+
+Past this initialize configuration .eslintrc anytime we can change the configuration what we want
+
+```javascript
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "plugins": ["prettier"],
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-unused-expressions": "error",
+    "prefer-const": "error",
+    "no-console": "warn",
+    "@typescript-eslint/no-unused-vars": "error"
+  },
+  "globals": {
+    "process": "readonly"
+  }
+}
+```
+
+Ignore linting this folder
+
+```javascript
+node_modules;
+dist;
+```
+
+File: .prettierrc.json and this initialize configuration and we can change the
+
+```javascript
+{
+    "semi": true,
+    "singleQuote": true
+}
+```
+
+File: .prettierignore add this folder
+
+```javascript
+node_modules;
+dist;
+```
+
+# step-5: Configuration the package.json with script
+
+Main destination change that
+
+```javascript
+"main": "./dist/server.js",
+```
+
+Make the script for running project locally, build project, lint all file, fix problem using lint, and format code using prettier.
+
+```javascript
+  "scripts": {
+    "build": "tsc",
+    "start:prod": "node ./dist/server.js",
+    "start:dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
+    "lint": "eslint src/**/*.ts",
+    "fix": "eslint src/**/*.ts --fix",
+    "format": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+```
+
+# step-6: Install ZOD OR JOI validation package
+
+Install ZOD package
+
+```javascript
+npm install zod
+```
+
+Install JOI package
+
+```javascript
+npm install joi
+```
+
+# step-7: Run project locally
+
+step-7.1
+Run eslint
+
+```javascript
+npm run lint
+```
+
+step-7.2
+Run prettier
+
+```javascript
+npm run format
+```
+
+step-7.3
+Build project
+
+```javascript
+npm run build
+```
+
+step-7.4
+Run javascript file
+
+```javascript
+npm run start:prod
+```
+
+step-7.5
+Run locally typescript file
+
+```javascript
+npm run start:dev
+```
+
+Author: Sourave Halder
+
+# Thank You for Scrolling my Readme file

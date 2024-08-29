@@ -1,23 +1,20 @@
 import { Response } from 'express';
-
-type TResponse<T> = {
-  success: boolean;
-  statusCode?: number;
-  message: string;
-  token?: string;
-  data: T;
-};
+import { TResponse } from '../interface/response';
 
 const sendResponse = <T>(res: Response, data: TResponse<T>) => {
-  const statusCode = data.statusCode !== undefined ? data.statusCode : 200;
-
-  res.status(statusCode).json({
+  const responseData: TResponse<T> = {
     success: data.success,
     statusCode: data.statusCode,
     message: data.message,
-    token: data.token,
+    meta: data.meta,
     data: data.data,
-  });
+    paymentSession: data.paymentSession,
+  };
+
+  if (data.token) {
+    responseData.token = data.token;
+  }
+  res.status(data.statusCode).json(responseData);
 };
 
 export default sendResponse;

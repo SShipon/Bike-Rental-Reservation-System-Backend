@@ -5,17 +5,15 @@ const bikeSchema = new Schema<TBike>(
   {
     name: {
       type: String,
-      required: [true, 'Bike name is required.'],
-      trim: true,
+      required: true,
     },
     description: {
       type: String,
-      required: [true, 'Bike description is required.'],
-      trim: true,
+      required: true,
     },
     pricePerHour: {
       type: Number,
-      required: [true, 'Price per hour is required.'],
+      required: true,
     },
     isAvailable: {
       type: Boolean,
@@ -23,19 +21,23 @@ const bikeSchema = new Schema<TBike>(
     },
     cc: {
       type: Number,
-      required: [true, 'CC (engine capacity) is required.'],
+      required: true,
+    },
+    image: {
+      type: String,
+      required: true,
     },
     year: {
       type: Number,
-      required: [true, 'Manufacturing year is required.'],
+      required: true,
     },
     model: {
       type: String,
-      required: [true, 'Bike model is required.'],
+      required: true,
     },
     brand: {
       type: String,
-      required: [true, 'Bike brand is required.'],
+      required: true,
     },
   },
   {

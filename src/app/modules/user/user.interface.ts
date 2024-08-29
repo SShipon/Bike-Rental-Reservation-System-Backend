@@ -1,12 +1,27 @@
-import { USER_ROLE } from './user.constant';
+import { Model } from 'mongoose';
 
+// user role type
+export type TRole = 'admin' | 'user';
+
+// user type
 export type TUser = {
   name: string;
   email: string;
   password: string;
   phone: string;
   address: string;
-  role: 'admin' | 'user';
+  _id?: string;
+  role: TRole;
 };
 
-export type TUserRole = keyof typeof USER_ROLE;
+// make the statics method interface for user validation
+export interface UserModel extends Model<TUser> {
+  // check user exists using email interface
+  isUserExistsByEmail(email: string): Promise<TUser>;
+
+  // password check interface
+  isPasswordMatched(
+    plainTextPassword: string,
+    hashPassword: string,
+  ): Promise<boolean>;
+}
